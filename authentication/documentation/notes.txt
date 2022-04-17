@@ -1,0 +1,12 @@
+Create an index.php for authentication directory. This should redirect the user to the home page of the site using the authentication code. Use a relative url eg ../
+
+When a user forgets their password and is sent a link to reset their password and they choose a password, many sites then get them to sign in rather than just signing them in after they choose their new password. What are the pros and cons?
+
+When a user closes their account is their session terminated ie logout?
+
+We need a routine to clear outdated rows from forgot_passwords and registers tables.
+expired rows could be deleted whenever a user follows the link from the verify email (registers table) or the link from the reset email (forgotten_passwords). This should be done in the script before checking for the token supplied by the user so that if their token has expired it is no longer in the database. If this is implemented then it is not necessary to check for the expiry time of tokens that are found in the tables.
+
+It might be doing everyone a favour to leave out usernames as browsers have a complex and unpredictable way of handling these at registration. One could always ask users to provide a user name when they have already registered with just their email and password.
+
+Why not just provide this for email and one password without confirmation of the password?

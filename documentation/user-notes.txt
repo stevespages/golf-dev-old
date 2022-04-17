@@ -1,0 +1,13 @@
+Create course
+
+Create player(s)
+
+Create competition 
+
+Create team(s)
+
+Add Player(s) to teams(s)
+
+Send email(s) to player(s)
+
+Check Match Results Page for submitted scores

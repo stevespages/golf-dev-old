@@ -1,0 +1,14 @@
+Remove php/ajax.php and most all the functions it calls from php/db-functions.php
+
+Create php/ajax/get-teams.php (one file for each ajax call)
+    This should have all the code in it for the ajax call. Do not reference a separate file for it.
+
+In javascript/modules/competition-admin.js
+    xhr.open(
+        "GET",
+        "../php/ajax/get-teams.php?"
+        + "param=value",
+        true
+    );
+
+Change competition-administration to competition-admin everywhere

@@ -1,0 +1,9 @@
+The webpage that users link to from their email should, after they have submitted their scores, display the results from the competition. It may be better if this is not done as the results are submitted and entered but only when the admin is happy to release them. Talk to John.
+
+When an admin's session times out they should be (first?) redirected to the home page and then informed they have been logged out. This is (partly) because if a page stays open but they are logged out and then they try and click on something that will lead to an unanticipated situation most likely resulting in an error.
+
+To Do
+
+    Make send email a get request to self (ie not ajax).
+        emails will not be sent often so no need for efficiency
+        this will be simpler than more ajax

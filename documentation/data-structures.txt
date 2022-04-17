@@ -1,0 +1,122 @@
+// getCompetitionRow returns a single row:
+Array
+(
+    [id] => 5
+    [name] => Saturday Game
+    [id_course] => 1
+    [date] => 2022-03-05
+    [time] => 10:20
+)
+
+// getTeams returns an array for each player in the competition.
+// Every player in the competition will have an array in the parent array:
+Array
+(
+    [0] => Array
+        (
+            [idTeams] => 28
+            [teamName] => Steve's Team
+            [idPlayers] => 1
+            [idPlayers2] => 1
+            [playerName] => Steve Greig
+            [email] => greigsteve@gmail.com
+        )
+)
+
+// getTeams returns a repetitive flat array format (above).
+// This is not easy to extract data from for rendering as html
+// So, we run teamsNested($teams) to yield a Nested Array.
+// teamsNested rearranges the array from getTeams.
+// The returned array groups each team together
+// There is a "players" array for each team:
+// Every team in the competition will have an array in the parent array:
+// This shows a competition with a team with 1 player and a team with 2 players
+Array
+(
+    [0] => Array
+        (
+            [idTeams] => 28
+            [teamName] => Steve's Team
+            [players] => Array
+                (
+                    [0] => Array
+                        (
+                            [idPlayers] => 1
+                            [playerName] => Steve Greig
+                            [email] => greigsteve@gmail.com
+                        )
+
+                )
+
+        )
+
+    [1] => Array
+        (
+            [idTeams] => 34
+            [teamName] => The Amazings
+            [players] => Array
+                (
+                    [0] => Array
+                        (
+                            [idPlayers] => 2
+                            [playerName] => Fred Bloggs
+                            [email] => fred@blog.com
+                        )
+
+                    [1] => Array
+                        (
+                            [idPlayers] => 3
+                            [playerName] => Tiger Woods
+                            [email] => tiger@woods.co.usa
+                        )
+
+                )
+
+        )
+
+)
+
+// getPlayers returns an array of arrays, one for each player
+// This if for each player in the app not just this competition
+// The list of players is used to select a player for a team
+// Selected players should be greyed out (within a competition)
+Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [name] => Steve Greig
+            [email] => greigsteve@gmail.com
+        )
+)
+
+// getScores returns an array or arrays
+// Each inner array is for one players scores for the competition
+
+Array
+(
+    [0] => Array
+        (
+            [name] => Steve Greig
+            [h1] => 1
+            [h2] => 2
+            [h3] => 3
+            [h4] => 4
+            [h5] => 5
+            [h6] => 6
+            [h7] => 7
+            [h8] => 8
+            [h9] => 9
+            [h10] => 8
+            [h11] => 7
+            [h12] => 6
+            [h13] => 5
+            [h14] => 4
+            [h15] => 3
+            [h16] => 2
+            [h17] => 1
+            [h18] => 2
+        )
+
+)
+

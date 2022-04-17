@@ -1,0 +1,5 @@
+* Have option to view password and provide password confirm if user does not choose view option. Clicking a button can toggle the text in the button from show password to hide password at the same time changing the password input attribute from "text" to "password". Also the button should toggle the visibility of the confirm password input field.
+
+* Make verify email and forgot password emails "No Reply".
+
+* Get Selenium testing going. Integrate with manual replying to verify and forgot email links.

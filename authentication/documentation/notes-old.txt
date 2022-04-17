@@ -1,0 +1,7 @@
+* Originally this site was reached at stevespages.org.uk/passwords. I then moved the passwords directory into sandbox/. This has broken the functionality. For example clicking "forgot password" takes you to .../passwords/authentication/?token=.... instead of .../sandbox/authentication/?token=....
+
+* I have hardcoded the new .../sandbox.... URLs into the functions for sending forgot password and verify email. To make "passwords" more portable a better solution is needed.
+
+* Remember to comment out error reporting in passwords/header.php when in production.
+
+* Get rid of hard links referencing .../sandbox... in passwords/admin/validate

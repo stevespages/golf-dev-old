@@ -1,0 +1,24 @@
+const formsUl = querySelector...
+
+formsUl.addEv(click
+    if(e.targ.class(h2)
+        show / hide form logic
+    if(e.targ.class(upload-score-btn)
+        uploadScore()
+        hide btn
+    if(e.targ.class(upload-handicap-btn)
+        uploadHandicap()
+        hide btn
+
+formsUl.addEv(input
+    if(e.targ.class(hole-btn
+        calculatePoints()
+        uploadScore()
+        display points
+        show btn
+    if(e.targ.class(handicap-btn
+        uploadHandicap()
+        hide button
+
+fn calculatePoints(score, holeNumber, holePar, holeSi, handicap){
+
