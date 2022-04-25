@@ -330,48 +330,10 @@ foreach($playersScores as $key => $ps){
 }
 ?>
         </ul>
-        <h2>Scores:</h2>
-        <!-- Old Table
-        <table>
-        <tr>
-            <th></th><th>1</th><th>2</th><th>3</th><th>4</th>
-            <th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th>
-            <th>11</th><th>12</th><th>13</th><th>14</th><th>15</th>
-            <th>16</th><th>17</th><th>18</th>
-        </tr>
-        -->
-<?php
-/* Old Table
-foreach ($scores as $score) {
-    echo "<tr>";
-    echo "<td>{$score['name']}";
-    echo " ({$score['handicap']})</td>";
-    echo "<td>{$score['h1']}</td>";
-    echo "<td>{$score['h2']}</td>";
-    echo "<td>{$score['h3']}</td>";
-    echo "<td>{$score['h4']}</td>";
-    echo "<td>{$score['h5']}</td>";
-    echo "<td>{$score['h6']}</td>";
-    echo "<td>{$score['h7']}</td>";
-    echo "<td>{$score['h8']}</td>";
-    echo "<td>{$score['h9']}</td>";
-    echo "<td>{$score['h10']}</td>";
-    echo "<td>{$score['h11']}</td>";
-    echo "<td>{$score['h12']}</td>";
-    echo "<td>{$score['h13']}</td>";
-    echo "<td>{$score['h14']}</td>";
-    echo "<td>{$score['h15']}</td>";
-    echo "<td>{$score['h16']}</td>";
-    echo "<td>{$score['h17']}</td>";
-    echo "<td>{$score['h18']}</td>";
-    echo "</tr>";
-}
-*/
-?>
-        <!-- Old Table
-        </table>
         <hr>
-        -->
+        <h2>Leaderboard</h2>
+<?php
+?>
         <table>
         <tr>
             <th></th><th>1</th><th>2</th><th>3</th><th>4</th>
@@ -452,32 +414,32 @@ echo "</code></pre>";
 echo "<hr>";
 echo '<p>$competitionRow</p>';
 echo "<pre><code>";
-echo print_r($competitionRow);
+print_r($competitionRow);
 echo "</code></pre>";
 echo "<hr>";
 echo '<p>$teams</p>';
 echo "<pre><code>";
-echo print_r($teams);
+print_r($teams);
 echo "</code></pre>";
 echo "<hr>";
 echo '<p>$teamsNested</p>';
 echo "<pre><code>";
-echo print_r($teamsNested);
+print_r($teamsNested);
 echo "</code></pre>";
 echo "<hr>";
 echo '<p>$scores</p>';
 echo "<pre><code>";
-echo print_r($scores);
+print_r($scores);
 echo "</code></pre>";
 echo "<hr>";
 echo '<p>$playersScores</p>';
 echo "<pre><code>";
-echo print_r($playersScores);
+print_r($playersScores);
 echo "</code></pre>";
 echo "<hr>";
 echo '<p>$course</p>';
 echo "<pre><code>";
-echo print_r($course);
+print_r($course);
 echo "</code></pre>";
 ?>
 <script type='module' src='javascript/main.js'></script>

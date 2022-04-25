@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Calculates points from scores and par and stroke index for hole
  * @param {integer} score - The gross score for the hole
  * @param {integer} holeNumber - The number of the hole (1 - 18)
@@ -14,23 +42,21 @@ function calculatePoints(score, holeNumber, holePar, holeSi, handicap)
     holeSi = parseInt(holeSi, 10);
     handicap = parseInt(handicap, 10);
 
-    /*
     console.log("score: ", score);
     console.log("holeNumber: ", holeNumber);
     console.log("holePar: ", holePar);
     console.log("holeSi: ", holeSi);
     console.log("handicap: ", handicap);
-    */
 
     let strokesGiven = 0;
 
-    if (holeSi <= handicap) {
+    if (holeSi &lt;= handicap) {
         strokesGiven = strokesGiven + 1;
     }
-    if (holeSi <= (handicap-18)) {
+    if (holeSi &lt;= (handicap-18)) {
         strokesGiven = strokesGiven + 1;
     }
-    if (holeSi <= (handicap-36)) {
+    if (holeSi &lt;= (handicap-36)) {
         strokesGiven = strokesGiven + 1;
     }
 
@@ -40,7 +66,7 @@ function calculatePoints(score, holeNumber, holePar, holeSi, handicap)
 
     let points = 2;
 
-    if (difference <= -4) {
+    if (difference &lt;= -4) {
         points = 6;
     }
     if (difference == -3) {
@@ -62,7 +88,6 @@ function calculatePoints(score, holeNumber, holePar, holeSi, handicap)
         points = 0;
     }
 
-    /*
     console.log("strokesGiven: ", strokesGiven);
     console.log("netStrokes: ", netStrokes);
     console.log("difference: ", difference);
@@ -72,7 +97,6 @@ function calculatePoints(score, holeNumber, holePar, holeSi, handicap)
     console.log("typeof(netStrokes: ", typeof(netStrokes));
     console.log("typeof(difference: ", typeof(difference));
     console.log("typeof(points: ", typeof(points));
-    */
 
     return points;
 }
@@ -89,18 +113,18 @@ function uploadScore(uploadBtn){
         'GET',
         '../php/ajax.php?'
             + 'calling-function=upload-score'
-            + '&score=' + uploadBtn.dataset.score
-            + '&hole-number=' + uploadBtn.dataset.holeNumber
-            + '&hole-par=' + uploadBtn.dataset.holePar
-            + '&hole-si=' + uploadBtn.dataset.holeSi
-            + '&handicap=' + uploadBtn.dataset.handicap
-            + '&token=' + uploadBtn.dataset.token
-            + '&uid=' + uploadBtn.dataset.uid,
+            + '&amp;score=' + uploadBtn.dataset.score
+            + '&amp;hole-number=' + uploadBtn.dataset.holeNumber
+            + '&amp;hole-par=' + uploadBtn.dataset.holePar
+            + '&amp;hole-si=' + uploadBtn.dataset.holeSi
+            + '&amp;handicap=' + uploadBtn.dataset.handicap
+            + '&amp;token=' + uploadBtn.dataset.token
+            + '&amp;uid=' + uploadBtn.dataset.uid,
         true
     );
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.onreadystatechange = function(){
-        if(xhr.readyState === 4 && xhr.status === 200){
+        if(xhr.readyState === 4 &amp;&amp; xhr.status === 200){
             // result should be Bool success or failure
             const response = xhr.responseText;
             const result = JSON.parse(response);
@@ -109,7 +133,7 @@ function uploadScore(uploadBtn){
                 uploadBtn.parentNode.innerHTML = '';
             }
         }
-    };
+    }
     xhr.send();
 }
 
@@ -118,30 +142,29 @@ function uploadScore(uploadBtn){
  * @param {Object} uploadHandicapBtn - Button clicked by user
  * @returns {void} - May need to return success or failure??
  */
-function uploadHandicap(handicapInput){
+function uploadHandicap(uploadHandicapBtn){
     const xhr = new XMLHttpRequest();
     xhr.open(
         'GET',
         '../php/ajax.php?'
             + 'calling-function=upload-handicap'
-            + '&handicap=' + handicapInput.value
-            + '&token=' + handicapInput.dataset.token
-            + '&uid=' + handicapInput.dataset.uid,
+            + '&amp;handicap=' + uploadHandicapBtn.dataset.handicap
+            + '&amp;token=' + uploadHandicapBtn.dataset.token
+            + '&amp;uid=' + uploadHandicapBtn.dataset.uid,
         true
     );
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.onreadystatechange = function(){
-        if(xhr.readyState === 4 && xhr.status === 200){
+        if(xhr.readyState === 4 &amp;&amp; xhr.status === 200){
             // result should be Bool success or failure
             const response = xhr.responseText;
             const result = JSON.parse(response);
             console.log('result: ', result);
             if(result.success){
-                // we need to hide this upload-handicap-button
-                //uploadHandicapBtn.parentNode.innerHTML = '';
+                uploadHandicapBtn.parentNode.innerHTML = '';
             }
         }
-    };
+    }
     xhr.send();
 }
 
@@ -154,44 +177,9 @@ const handicapInputs = document.querySelectorAll('.handicap-input');
 console.log('handicapInputs: ', handicapInputs);
 
 /**
- * Calculate and display points for holes which have a score when the page loads.
+ * @description Adds event listener to formsUl
  */
-holeInputs.forEach(function(holeInput){
-    if(holeInput.value !== ''){
-        const handicap = document.querySelector('#handicap' + holeInput.dataset.playerId).value;
-        const score = holeInput.value;
-        const holeNumber = holeInput.dataset.holeNumber;
-        const holePar = holeInput.dataset.holePar;
-        const holeSi = holeInput.dataset.holeSi;
-        console.log(handicap);
-        console.log(holeInput.parentNode.nextSibling);
-        holeInput.parentNode.nextSibling.innerHTML
-            = calculatePoints(score, holeNumber, holePar, holeSi, handicap);
-    }
-});
-const playerTables = document.querySelectorAll('.player-table');
-playerTables.forEach(function(playerTable){
-    console.log('playerTable: ', playerTable);
-    const playerTableScores = playerTable.querySelectorAll('.points-td');
-    let totalPoints = 0;
-    playerTableScores.forEach(function(el){
-        totalPoints += (el.innerText * 1);
-    });
-    const totalPointsTd = playerTable.querySelectorAll('.total-points-td');
-    totalPointsTd[0].innerText = totalPoints;
-    console.log(playerTableScores);
-});
-/*
-holeInput.offsetParent.nextSibling.innerHTML
-    = calculatePoints(score, holeNumber, holePar, holeSi, handicap);
-const pointsTds = holeInput.offsetParent.offsetParent.parentNode.querySelectorAll('.points-td');
-let totalPoints = 0;
-pointsTds.forEach(function(el){
-    totalPoints += (el.innerText * 1);
-});
-
-event.target.offsetParent.offsetParent.parentNode.querySelector('#total-points-td').innerText = totalPoints;
-*/ 
+const x = 7;
 
 /**
  * Listen to click event on formsUl
@@ -219,12 +207,6 @@ formsUl.addEventListener('click', function(event){
         uploadBtns.forEach(function(uploadBtn){
             uploadScore(uploadBtn);
         });
-    }
-    if(event.target.classList.contains('upload-handicap-btn')){
-        const handicapInput = event.target.parentNode.querySelector('.handicap-input');
-        console.log('handicapInput: ', handicapInput);
-        console.log('handicap: ', handicapInput.value);
-        uploadHandicap(handicapInput);
     }
 });
 
@@ -311,3 +293,26 @@ handicapInputs.forEach(handicapInput => {
 });
 */
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#calculatePoints">calculatePoints</a></li><li><a href="global.html#uploadHandicap">uploadHandicap</a></li><li><a href="global.html#uploadScore">uploadScore</a></li><li><a href="global.html#x">x</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 18 2022 16:56:44 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

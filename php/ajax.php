@@ -17,9 +17,6 @@
 
 require './db-functions.php';
 
-if($_GET['calling-function'] === 'upload-handicap'){
-}
-
 if($_GET['calling-function'] === 'upload-score'){
     function updateHoleScore($db, $emailsRow){
         $tableName = "uid{$_GET['uid']}scores";
@@ -56,3 +53,30 @@ if($_GET['calling-function'] === 'upload-score'){
     $resultArray = ['success' => $result];
     echo json_encode($resultArray);
 }
+
+if($_GET['calling-function'] === 'upload-handicap'){
+    function updateHandicap($db, $emailsRow){
+        $tableName = "uid{$_GET['uid']}scores";
+        $sql = "UPDATE $tableName SET handicap = :handicap";
+        $sql .= " WHERE id_competitions = :id_competitions AND";
+        $sql .= " id_players = :id_players";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':handicap', $_GET['handicap']);
+        $stmt->bindParam(':id_competitions', $emailsRow['id_competitions']);
+        $stmt->bindParam(':id_players', $emailsRow['id_players']);
+        return($stmt->execute());
+    }
+    $emailsRow = getEmailsRow($db, $_GET['uid'], $_GET['token']);
+    $result = updateHandicap($db, $emailsRow);
+    $resultArray = ['success' => $result];
+    /*
+    $resultArray = [
+        'success' => false,
+        'handicap' => $_GET['handicap'],
+        'token' => $_GET['token'],
+        'uid' => $_GET['uid'],
+    ];
+     */
+    echo json_encode($resultArray);
+}
+

@@ -74,8 +74,17 @@ if (isset($_GET['competitionid'])) {
  */
 function getCompetitions($db)
 {
+    /*
     $tableName = "uid".$_SESSION["uid"]."competitions";
     $sql = "SELECT id, name, id_course FROM $tableName";
+     */
+    $tablePrefix = "uid".$_SESSION['uid'];
+    $com = $tablePrefix.'competitions';
+    $cou = $tablePrefix.'courses';
+    $sql = "SELECT $com.id AS id, $com.name AS name, $com.id_course AS idCourse, $cou.name AS courseName FROM $com";
+    $sql .= " LEFT JOIN $cou ON $cou.id = $com.id_course";
+    // var_dump($sql);
+    // exit();
     $stmt = $db->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll();
@@ -90,10 +99,10 @@ $competitions = getCompetitions($db);
 for ($i=0; $i < count($competitions); $i++) {
     echo "<li id='competition-".$competitions[$i]['id']."'>";
     echo "<a href='../competition-admin/?competitionid=";
-    echo $competitions[$i]['id']."'>".$competitions[$i]['name']." ";
-    echo $competitions[$i]['id_course']."</a> ";
-    echo "<a href='./?competitionid=";
-    echo $competitions[$i]['id']."'>Delete</a>";
+    echo $competitions[$i]['id']."'>".$competitions[$i]['name']."</a>";
+    echo ", ".$competitions[$i]['courseName'];
+    echo " (<a href='./?competitionid=";
+    echo $competitions[$i]['id']."'>Delete</a>)";
     echo "</li>";
 }
 ?>      

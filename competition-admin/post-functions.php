@@ -95,3 +95,4 @@ function insertPlayerToScores($db, $competitionId, $playerId){
     $stmt->bindParam(':id_players', $playerId);
     $stmt->execute();
 }
+

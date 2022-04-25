@@ -49,12 +49,44 @@ function getToken($db, $playersId, $competitionsId){
     $result = $stmt->fetchColumn();
     return $result;
 }
+function getPlayersScores($db, $playersId, $competitionsId){
+    $tableName = 'uid' . $_GET['u'] . 'scores';
+    $sql = "SELECT handicap, h1, h2, h3, h4, h5, h6,";
+    $sql .= " h7, h8, h9, h10, h11, h12, h13, h14, h15, h16, h17, h18";
+    $sql .= " FROM $tableName WHERE";
+    $sql .= " id_players = $playersId";
+    $sql .= " AND id_competitions = $competitionsId";
+    $stmt= $db->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch();
+    return $result;
+}
 foreach($teamPlayers as $player){
     $token = getToken($db, $player['id'], $emailsRow['id_competitions']);
+    $scores = getPlayersScores($db, $player['id'], $emailsRow['id_competitions']);
     $teamPlayersTokens[] = [
         'id' => $player['id'],
         'name' => $player['name'],
-        'token' => $token
+        'token' => $token,
+        'handicap' => $scores['handicap'],
+        'h1' => $scores['h1'],
+        'h2' => $scores['h2'],
+        'h3' => $scores['h3'],
+        'h4' => $scores['h4'],
+        'h5' => $scores['h5'],
+        'h6' => $scores['h6'],
+        'h7' => $scores['h7'],
+        'h8' => $scores['h8'],
+        'h9' => $scores['h9'],
+        'h10' => $scores['h10'],
+        'h11' => $scores['h11'],
+        'h12' => $scores['h12'],
+        'h13' => $scores['h13'],
+        'h14' => $scores['h14'],
+        'h15' => $scores['h15'],
+        'h16' => $scores['h16'],
+        'h17' => $scores['h17'],
+        'h18' => $scores['h18']
     ];
 }
 ?>
@@ -64,11 +96,13 @@ foreach($teamPlayers as $player){
         <link rel="stylesheet" href="../css/main.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--
         <style>
             table, th, td {
                 border: 1px solid;
             }
         </style>
+        -->
         <title>Golf</title>
     </head>
     <body>
@@ -88,20 +122,23 @@ foreach($teamPlayers as $player){
         echo '<fieldset>';
         echo "<label for='handicap'>Course Handicap</label>";
         echo "<input type='number' id='handicap{$tPt['id']}'";
+        echo " value='{$tPt['handicap']}'";
         echo " class='handicap-input' name='handicap' min='0' max='50'";
         echo " data-player-id='{$tPt['id']}'";
         echo " data-token='{$tPt['token']}'";
         echo " data-uid='{$_GET['u']}'>";
-        echo "<button id='handicap-btn{$tPt['id']}'>^</button>";
+        echo "<button type='button' class='upload-handicap-btn'>^</button>";
         echo '</fieldset>';
-        echo '<table>';
+        echo "<table class='player-table'>";
         for ($i=1; $i<19; $i++) {
             $par = "h{$i}par";
             $si = "h{$i}si";
+            $hole = "h{$i}";
             echo "<tr>";
             echo "<td>$i</td>";
             echo "<td><input type='number' id='h$i' class='hole-input'";
             echo " name='h$i' form='scores-form'";
+            echo " value='$tPt[$hole]'";
             echo " data-player-id='{$tPt['id']}'";
             echo " data-token='{$tPt['token']}'";
             echo " data-uid='{$_GET['u']}'";
@@ -113,7 +150,7 @@ foreach($teamPlayers as $player){
             echo "<td class='submit-td'></td>";
             echo "</tr>";
         }
-        echo '<tr><td></td><td></td><td id="total-points-td"></td></tr>';
+        echo "<tr><td></td><td></td><td id='total-points-td' class='total-points-td'></td></tr>";
         echo '</table>';
         echo '</form>';
     }
