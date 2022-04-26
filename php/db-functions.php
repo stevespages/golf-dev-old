@@ -133,3 +133,87 @@ function getCourseForCompetition($db, $competitionId, $uid)
     return $result;
     // return $c;
 }
+
+/**
+ * Gets teams LEFT JOIN teams_players LEFT JOIN players
+ * WHERE t.id_competitions = $idCompetitions
+ * 
+ * @param object  $db        PDO Object
+ * @param integer $idCompetitions name of the team
+ * 
+ * @return bool
+ *
+ * you can add another LEFT JOIN scores ... so this gets
+ * all the info for displaying on the page...
+ */
+function getTeams($db, $idCompetitions, $uid)
+{
+    $tablePrefix = "uid".$uid;
+    $tp = $tablePrefix."teams_players";
+    $t = $tablePrefix."teams";
+    $p = $tablePrefix."players";
+    $sql = "SELECT $t.id AS idTeams, $t.name AS teamName,";
+    $sql .= " $tp.id_players AS idPlayers, $p.id AS idPlayers2,";
+    $sql .= " $p.name AS playerName, $p.email AS email FROM $t LEFT JOIN";
+    $sql .= " $tp ON $t.id = $tp.id_teams LEFT JOIN $p";
+    $sql .= "  ON $p.id = $tp.id_players ";
+    $sql .= "WHERE $t.id_competitions = $idCompetitions";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+// See sandbox/array-nesting/ to see how to make $teams more useful ie. nested.
+function nestTeams($teams){
+    $teamsNested = [];
+    foreach ($teams as $row) {
+        if (!isset($teamsNested[$row["idTeams"]])) {
+            $teamsNested[$row["idTeams"]]
+                =   [
+                       "idTeams" => $row["idTeams"],
+                       "teamName" => $row["teamName"],
+                       "players" => [] 
+                    ];
+        }
+        // if(isset($row["playerId"])){ so you don't get empty keys}
+        if (!empty($row["idPlayers"])) {
+            $teamsNested[$row["idTeams"]]["players"][]
+                =   [
+                    "idPlayers" => $row["idPlayers"],
+                    "playerName" => $row["playerName"],
+                    "email" => $row["email"]
+                    ];
+        }
+    }
+    // convert the primary index of the array to regular 
+    // sequence of integers starting at zero.
+    $teamsNested = array_values($teamsNested);
+    return $teamsNested;
+}
+
+/**
+ * Selects a row from uid23scores table
+ * 
+ * @param object  $db      PDO Object
+ * @param integer $competitionId derived from url query string parameter value
+ * 
+ * @return array of rows from the table
+ * 
+ * this should be unnecessary once you add another JOIN to getTeams above
+ */
+function getScores($db, $competitionId, $uid)
+{
+    $tablePrefix = "uid".$uid;
+    $s = $tablePrefix."scores";
+    $p = $tablePrefix."players";
+    $sql = "SELECT $p.name, $s.id_players, $s.handicap, $s.h1, $s.h2, $s.h3, $s.h4, $s.h5, $s.h6, $s.h7, $s.h8, $s.h9,";
+    $sql .= " $s.h10, $s.h11, $s.h12, $s.h13, $s.h14, $s.h15, $s.h16, $s.h17, $s.h18";
+    $sql .= " FROM $s LEFT JOIN $p ON $p.id = $s.id_players WHERE id_competitions = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(":id", $competitionId);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+

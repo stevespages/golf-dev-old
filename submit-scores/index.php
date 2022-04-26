@@ -153,8 +153,28 @@ foreach($teamPlayers as $player){
         echo "<tr><td></td><td></td><td id='total-points-td' class='total-points-td'></td></tr>";
         echo '</table>';
         echo '</form>';
+        echo '</li>';
     }
+?>
 
+        </ul>
+        <hr>
+
+<?php
+
+$competitionId = $emailsRow['id_competitions'];
+
+$teams = getTeams($db, $competitionId, $_GET['u']);
+
+$teamsNested = nestTeams($teams);
+
+$scores = getScores($db, $competitionId, $_GET['u']);
+
+require_once '../php/leaderboard.php';
+
+?>
+
+<?php
 echo '<hr>';
 echo '<p>$emailsRow</p>';
 echo '<pre></code>';
