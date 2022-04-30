@@ -82,7 +82,6 @@ function sendEmails($db, $emailsToSend, $competitionId)
         $msg = "Hallo {$email['playerName']}, you are a contestant in team, {$email['teamName']}, for the {$email['competitionName']} competition at {$email['courseName']}, {$email['coursePostcode']} ({$email['competitionDate']}, {$email['competitionTime']}). If you would like to submit your scores electronically through a secure website please click this link: http://stevespages.org.uk/golf/submit-scores/?token={$token}&u={$_SESSION['uid']} Otherwise please take your score card to the competition administrators when you have completed it.";
         $headers = "From: golf@golf.com";
         $sql = "INSERT INTO $tableName (id_players, id_teams, id_competitions, token) VALUES (:id_players, :id_teams, :id_competitions, '$token')";
-        var_dump($sql);
         $stmt = $db->prepare($sql);
         $stmt->bindParam(":id_players", $email['playerId']);
         $stmt->bindParam(":id_teams", $email['teamId']);

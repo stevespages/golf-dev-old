@@ -19,13 +19,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+require_once '../header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <link rel="stylesheet" href="../css/main.css">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Golf</title>
         <style>
         input[type=number] {

@@ -153,22 +153,10 @@ console.log('holeInputs: ', holeInputs);
 const handicapInputs = document.querySelectorAll('.handicap-input');
 console.log('handicapInputs: ', handicapInputs);
 
-/**
- * Calculate and display points for holes which have a score when the page loads.
- */
-holeInputs.forEach(function(holeInput){
-    if(holeInput.value !== ''){
-        const handicap = document.querySelector('#handicap' + holeInput.dataset.playerId).value;
-        const score = holeInput.value;
-        const holeNumber = holeInput.dataset.holeNumber;
-        const holePar = holeInput.dataset.holePar;
-        const holeSi = holeInput.dataset.holeSi;
-        console.log(handicap);
-        console.log(holeInput.parentNode.nextSibling);
-        holeInput.parentNode.nextSibling.innerHTML
-            = calculatePoints(score, holeNumber, holePar, holeSi, handicap);
-    }
-});
+const scoresForms = document.querySelectorAll('.scores-form');
+// start with score forms hidden:
+scoresForms.forEach(el => el.setAttribute('style', 'display:none'));
+
 const playerTables = document.querySelectorAll('.player-table');
 playerTables.forEach(function(playerTable){
     console.log('playerTable: ', playerTable);

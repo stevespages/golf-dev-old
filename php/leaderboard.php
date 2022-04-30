@@ -31,6 +31,7 @@ function calculatePoints($holePar, $holeSi, $handicap, $grossStrokes)
     return $points;
 }
 
+/*
 function assignScores($scores){
     $playersScores = [];
     foreach($scores as $score){
@@ -80,77 +81,72 @@ foreach($playersScores as $key => $ps){
     $playersScores[$key]['p17'] = calculatePoints($course['h17par'], $course['h17si'], $playersScores[$key]['handicap'], $playersScores[$key]['h17']);
     $playersScores[$key]['p18'] = calculatePoints($course['h18par'], $course['h18si'], $playersScores[$key]['handicap'], $playersScores[$key]['h18']);
 }
+ */
 ?>
 
         <h2>Leaderboard</h2>
-        <table>
+        <table id='leaderboard-table'>
             <tr>
-                <th></th><th>1</th><th>2</th><th>3</th><th>4</th>
-                <th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th>
+                <th></th><th>1&nbsp;</th><th>2&nbsp;</th><th>3&nbsp;</th><th>4&nbsp;</th>
+                <th>5&nbsp;</th><th>6&nbsp;</th><th>7&nbsp;</th><th>8&nbsp;</th><th>9&nbsp;</th><th>10</th>
                 <th>11</th><th>12</th><th>13</th><th>14</th><th>15</th>
                 <th>16</th><th>17</th><th>18</th>
             </tr>
 
 <?php
-foreach ($teamsNested as $tN) {
+foreach ($teams as $team) {
     echo "<tr>";
-    echo "<th>".$tN['teamName']."</th>";
+    echo "<th>".$team['teamName']."</th>";
     echo "<td></td><td></td><td></td><td></td><td></td><td></td>";
     echo "<td></td><td></td><td></td><td></td><td></td><td></td>";
     echo "<td></td><td></td><td></td><td></td><td></td><td></td>";
     echo "</tr>";
-    foreach ($tN['players'] as $p) {
+    foreach ($team['players'] as $p) {
         echo "<tr>";
         echo "<td>".$p['playerName'];
-        if(!empty($playersScores[$p['idPlayers']])){
-            echo "(".$playersScores[$p['idPlayers']]['handicap'].")";
-        }
+        echo "(".$p['handicap'].")";
         echo "</td>";
-        if(!empty($playersScores[$p['idPlayers']])){
-            echo "<td>".$playersScores[$p['idPlayers']]['h1']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h2']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h3']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h4']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h5']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h6']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h7']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h8']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h9']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h10']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h11']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h12']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h13']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h14']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h15']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h16']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h17']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['h18']."</td>";
+            echo "<td>".$p['h1']."</td>";
+            echo "<td>".$p['h2']."</td>";
+            echo "<td>".$p['h3']."</td>";
+            echo "<td>".$p['h4']."</td>";
+            echo "<td>".$p['h5']."</td>";
+            echo "<td>".$p['h6']."</td>";
+            echo "<td>".$p['h7']."</td>";
+            echo "<td>".$p['h8']."</td>";
+            echo "<td>".$p['h9']."</td>";
+            echo "<td>".$p['h10']."</td>";
+            echo "<td>".$p['h11']."</td>";
+            echo "<td>".$p['h12']."</td>";
+            echo "<td>".$p['h13']."</td>";
+            echo "<td>".$p['h14']."</td>";
+            echo "<td>".$p['h15']."</td>";
+            echo "<td>".$p['h16']."</td>";
+            echo "<td>".$p['h17']."</td>";
+            echo "<td>".$p['h18']."</td>";
             echo "</tr>";
-        }
         echo "<tr>";
         echo "<td>";
         echo "</td>";
-        if(!empty($playersScores[$p['idPlayers']])){
-            echo "<td>".$playersScores[$p['idPlayers']]['p1']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p2']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p3']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p4']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p5']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p6']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p7']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p8']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p9']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p10']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p11']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p12']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p13']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p14']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p15']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p16']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p17']."</td>";
-            echo "<td>".$playersScores[$p['idPlayers']]['p18']."</td>";
+            echo "<td>".calculatePoints($course['h1par'], $course['h1si'], $p['handicap'], $p['h1'])."</td>";
+            echo "<td>".calculatePoints($course['h2par'], $course['h2si'], $p['handicap'], $p['h2'])."</td>";
+            echo "<td>".calculatePoints($course['h3par'], $course['h3si'], $p['handicap'], $p['h3'])."</td>";
+            echo "<td>".calculatePoints($course['h4par'], $course['h4si'], $p['handicap'], $p['h4'])."</td>";
+            echo "<td>".calculatePoints($course['h5par'], $course['h5si'], $p['handicap'], $p['h5'])."</td>";
+            echo "<td>".calculatePoints($course['h6par'], $course['h6si'], $p['handicap'], $p['h6'])."</td>";
+            echo "<td>".calculatePoints($course['h7par'], $course['h7si'], $p['handicap'], $p['h7'])."</td>";
+            echo "<td>".calculatePoints($course['h8par'], $course['h8si'], $p['handicap'], $p['h8'])."</td>";
+            echo "<td>".calculatePoints($course['h9par'], $course['h9si'], $p['handicap'], $p['h9'])."</td>";
+            echo "<td>".calculatePoints($course['h10par'], $course['h10si'], $p['handicap'], $p['h10'])."</td>";
+            echo "<td>".calculatePoints($course['h11par'], $course['h11si'], $p['handicap'], $p['h11'])."</td>";
+            echo "<td>".calculatePoints($course['h12par'], $course['h12si'], $p['handicap'], $p['h12'])."</td>";
+            echo "<td>".calculatePoints($course['h13par'], $course['h13si'], $p['handicap'], $p['h13'])."</td>";
+            echo "<td>".calculatePoints($course['h14par'], $course['h14si'], $p['handicap'], $p['h14'])."</td>";
+            echo "<td>".calculatePoints($course['h15par'], $course['h15si'], $p['handicap'], $p['h15'])."</td>";
+            echo "<td>".calculatePoints($course['h16par'], $course['h16si'], $p['handicap'], $p['h16'])."</td>";
+            echo "<td>".calculatePoints($course['h17par'], $course['h17si'], $p['handicap'], $p['h17'])."</td>";
+            echo "<td>".calculatePoints($course['h18par'], $course['h18si'], $p['handicap'], $p['h18'])."</td>";
             echo "</tr>";
-        }
     }
 }
 ?>

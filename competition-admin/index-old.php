@@ -68,14 +68,34 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 }
 
-// necessary because sessions not available in submit-scores and
-// functions have to work with that as well.
-$uid = $_SESSION['uid'];
+/**
+ * Selects a row from uid23competitions table
+ * 
+ * @param object  $db      PDO Object
+ * @param integer $competitionId derived from url query string parameter value
+ * 
+ * @return An array of rows from the table
+ */
+function getCompetitionRow($db, $competitionId)
+{
+    $tableName = "uid".$_SESSION["uid"]."competitions";
+    $sql = "SELECT id, name, id_course, date, time FROM $tableName WHERE id = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(":id", $competitionId);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
 
-require_once '../php/competition-data.php';
+$competitionRow = getCompetitionRow($db, $competitionId);
 
-// only in competition-admin not in submit-scores
-$players = getPlayers($db, $uid);
+$teams = getTeams($db, $competitionId, $_SESSION['uid']);
+
+$teamsNested = nestTeams($teams);
+
+$course = getCourseForCompetition($db, $competitionId, $_SESSION['uid']);
+
+$players = getPlayers($db);
 
 require_once '../header.php';
 ?>
@@ -86,8 +106,8 @@ require_once '../header.php';
         <h1>Competition Administration</h1>
         <h2>
 <?php
-echo $competition["name"].", ".$course['name'].", ";
-echo $competition["date"].", ".$competition["time"];
+echo $competitionRow["name"].", ".$course['name'].", ";
+echo $competitionRow["date"].", ".$competitionRow["time"];
 ?>      
         </h2>
         <a href="./?send-all-emails=yes&competitionid=<?php echo $competitionId ?>">
@@ -101,59 +121,100 @@ echo $competition["date"].", ".$competition["time"];
         </form>
         <ul id="teams-ul">
 <?php
-require_once '../php/scores-form.php';
-foreach ($teams as $team) {
+foreach ($teamsNested as $tN) {
     echo "<li class='teams-name-li'>";
-    echo $team['teamName'];
+    echo $tN["teamName"];
     echo "<div class='teams-menu-div'>";
-    echo " <a href='./?competitionid={$competitionId}&delete-teamid={$team['idTeams']}'>Delete</a>";
+    echo " <a href='./?competitionid={$competitionId}&delete-teamid={$tN['idTeams']}'>Delete</a>";
     echo "<form method='post'>";
     echo "<select name='select-player'>";
-    echo '<option disabled selected>Add Player</option>';
+    echo "<option disabled selected>Add Player</option>";
     foreach ($players as $player) {
         echo "<option value='{$player['id']}'>";
-        echo $player['name'];
-        echo '</option>';
+        echo $player["name"];
+        echo "</option>";
     }
-    echo '</select>';
-    echo "<input type='hidden' name='teamid' value='{$team['idTeams']}'>";
+    echo "</select>";
+    echo "<input type='hidden' name='teamid' value='{$tN['idTeams']}'>";
     echo "<input type='hidden' name='competitionid' value='{$competitionId}'>";
     echo "<input type='submit' value='Add'>";
-    echo '</form>';
-    echo '</div>';
+    echo "</form>";
+    echo "</div>";
     echo "<ul>";
-    foreach ($team["players"] as $teamPlayer) {
+    foreach ($tN["players"] as $teamPlayer) {
         echo "<li class='players-menu-li'>";
         echo $teamPlayer["playerName"];
-        echo ', ';
+        echo ", ";
         echo $teamPlayer["email"];
         echo "<div class='players-menu-div'>";
         echo "<form method='post'>";
-        echo "<input type='hidden' name='teamid' value='{$team['idTeams']}'>";
+        echo "<input type='hidden' name='teamid' value='{$tN['idTeams']}'>";
         echo "<input type='hidden' name='competitionid' value='{$competitionId}'>";
         echo "<input type='hidden' name='remove-player' value='{$teamPlayer['idPlayers']}'>";
         echo "<input type='submit' value='remove'>";
-        echo '</form>';
-        echo "<div class='add-scores-div'>";
-        scoresForm($teamPlayer, $course, $_SESSION['uid']);
-        echo '</div>';
-        echo '</div>';
-        echo '</li>';
+        echo "</form>";
+        echo "</div>";
+        echo "</li>";
     }
-    echo '</ul>';
-    echo '</li>';
+    echo "</ul>";
+    echo "</li>";
 }
+
 ?>
         </ul>
         <hr>
 
 <?php
 
+$scores = getScores($db, $competitionId, $_SESSION['uid']);
+
 require_once '../php/leaderboard.php';
 
 ?>
 
+<?php
+echo "<hr>";
+echo '<p>$players</p>';
+echo "<pre><code>";
+print_r($players);
+echo "</code></pre>";
+
+echo "<hr>";
+echo '<p>$competitionRow</p>';
+echo "<pre><code>";
+print_r($competitionRow);
+echo "</code></pre>";
+
+echo "<hr>";
+echo '<p>$teams</p>';
+echo "<pre><code>";
+print_r($teams);
+echo "</code></pre>";
+
+echo "<hr>";
+echo '<p>$teamsNested</p>';
+echo "<pre><code>";
+print_r($teamsNested);
+echo "</code></pre>";
+
+echo "<hr>";
+echo '<p>$scores</p>';
+echo "<pre><code>";
+print_r($scores);
+echo "</code></pre>";
+
+echo "<hr>";
+echo '<p>$playersScores</p>';
+echo "<pre><code>";
+print_r($playersScores);
+echo "</code></pre>";
+
+echo "<hr>";
+echo '<p>$course</p>';
+echo "<pre><code>";
+print_r($course);
+echo "</code></pre>";
+?>
 <script type='module' src='javascript/main.js'></script>
     </body>
 </html>
-

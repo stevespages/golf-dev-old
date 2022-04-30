@@ -1,0 +1,21 @@
+body {
+    color: red;
+}
+
+#leaderboard-table {
+    table-layout: fixed;
+    width: auto;
+    border-collapse: collapse;
+}
+
+#leaderboard-table td {
+    width: 2em;
+}
+
+#leaderboard-table tr td:nth-child(even) {
+    background: #dae5f4;
+}
+
+#leaderboard-table tr th:nth-child(even) {
+    background: #dae5f4;
+}

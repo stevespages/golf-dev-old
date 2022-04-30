@@ -64,9 +64,9 @@ function getCourseNames($db)
  * 
  * @return array of rows from the table
  */
-function getPlayers($db)
+function getPlayers($db, $uid)
 {
-    $tableName = "uid".$_SESSION["uid"]."players";
+    $tableName = "uid".$uid."players";
     $sql = "SELECT id, name, email FROM $tableName";
     $stmt = $db->prepare($sql);
     $stmt->execute();
@@ -99,6 +99,30 @@ function getEmailsRow($db, $uid, $token)
 }
 
 /**
+ * Selects all the players from the uid123players table
+ * 
+ * @param object  $db    PDO Object
+ * @param integer $uid   the id of the administrator
+ * @param string  $token unguessable string in emails table
+ * 
+ * @used-by golf/submit-scores/index.php
+ * @used-by golf/received-scores/index.php
+ * 
+ * @return array of rows from the table
+ */
+function getTeamsRow($db, $uid, $teamId)
+{
+    $tableName = "uid".$uid."teams";
+    $sql = "SELECT id, name, id_competitions from $tableName";
+    $sql .= " WHERE id = :id";
+    $stmt= $db->prepare($sql);
+    $stmt->bindParam(":id", $teamId);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+/**
  * Gets a row from the uid123courses table.
  *  
  * @param OBJECT  $db PDO Object
@@ -109,7 +133,7 @@ function getEmailsRow($db, $uid, $token)
  * 
  * @return ARRAY of the table row
  */
-function getCourseForCompetition($db, $competitionId, $uid)
+function getCourseForCompetition($db, $uid, $competitionId)
 {
     $tablePrefix = "uid".$uid;
     $c = $tablePrefix."courses";
@@ -146,7 +170,7 @@ function getCourseForCompetition($db, $competitionId, $uid)
  * you can add another LEFT JOIN scores ... so this gets
  * all the info for displaying on the page...
  */
-function getTeams($db, $idCompetitions, $uid)
+function getTeams($db, $uid, $competitionId)
 {
     $tablePrefix = "uid".$uid;
     $tp = $tablePrefix."teams_players";
@@ -157,43 +181,15 @@ function getTeams($db, $idCompetitions, $uid)
     $sql .= " $p.name AS playerName, $p.email AS email FROM $t LEFT JOIN";
     $sql .= " $tp ON $t.id = $tp.id_teams LEFT JOIN $p";
     $sql .= "  ON $p.id = $tp.id_players ";
-    $sql .= "WHERE $t.id_competitions = $idCompetitions";
+    $sql .= "WHERE $t.id_competitions = $competitionId";
     $stmt = $db->prepare($sql);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
 
-// See sandbox/array-nesting/ to see how to make $teams more useful ie. nested.
-function nestTeams($teams){
-    $teamsNested = [];
-    foreach ($teams as $row) {
-        if (!isset($teamsNested[$row["idTeams"]])) {
-            $teamsNested[$row["idTeams"]]
-                =   [
-                       "idTeams" => $row["idTeams"],
-                       "teamName" => $row["teamName"],
-                       "players" => [] 
-                    ];
-        }
-        // if(isset($row["playerId"])){ so you don't get empty keys}
-        if (!empty($row["idPlayers"])) {
-            $teamsNested[$row["idTeams"]]["players"][]
-                =   [
-                    "idPlayers" => $row["idPlayers"],
-                    "playerName" => $row["playerName"],
-                    "email" => $row["email"]
-                    ];
-        }
-    }
-    // convert the primary index of the array to regular 
-    // sequence of integers starting at zero.
-    $teamsNested = array_values($teamsNested);
-    return $teamsNested;
-}
-
 /**
- * Selects a row from uid23scores table
+ * Selects rows from uid23scores table
  * 
  * @param object  $db      PDO Object
  * @param integer $competitionId derived from url query string parameter value
@@ -202,7 +198,7 @@ function nestTeams($teams){
  * 
  * this should be unnecessary once you add another JOIN to getTeams above
  */
-function getScores($db, $competitionId, $uid)
+function getScores($db, $uid, $competitionId)
 {
     $tablePrefix = "uid".$uid;
     $s = $tablePrefix."scores";

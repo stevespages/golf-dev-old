@@ -131,7 +131,7 @@
       "command": "click",
       "target": "id=h1si",
       "targets": [
-        ["id=h1si", "id"],
+        ["id=h1si", id"],
         ["name=h1si", "name"],
         ["css=#h1si", "css:finder"],
         ["xpath=//input[@id='h1si']", "xpath:attributes"],
@@ -1593,4 +1593,4 @@
   }],
   "urls": ["https://stevespages.org.uk/golf-dev-2/", "https://stevespages.org.uk/golf/"],
   "plugins": []
-}
+}"

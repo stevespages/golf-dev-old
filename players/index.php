@@ -31,15 +31,10 @@ if(isset($_GET['delete'])){
     $stmt->execute();
 }
 
-$players = getPlayers($db);
-?>
+$players = getPlayers($db, $_SESSION['uid']);
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <link rel="stylesheet" href="../css/main.css">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+require_once '../header.php';
+?>
         <title>Golf</title>
     </head>
     <body>

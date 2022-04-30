@@ -11,25 +11,9 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+require_once './header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <!-- From realfavicongenerator.com
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="/site.webmanifest">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-        <meta name="msapplication-TileColor" content="#da532c">
-        <meta name="theme-color" content="#ffffff">
-        End of realfavicongenerator.com stuff -->
-        <!-- my code but using the realfavicongenerator's image -->
-        <link href="golf-ball.svg" rel="icon">
-        <!-- END of my code but using the realfavicongenerator's image -->
-        <link rel="stylesheet" href="./css/main.css">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Golf</title>
     </head>
     <body>
