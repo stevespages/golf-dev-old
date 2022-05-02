@@ -77,6 +77,7 @@ require_once '../php/leaderboard.php';
 ?>
         </ul>
         <hr>
+<script src='../javascript/scores-form.js'></script>
 <script type="module" src="./javascript/main.js"></script>
     </body>
 </html>

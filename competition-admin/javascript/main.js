@@ -1,7 +1,6 @@
 const teamsUl = document.querySelector('#teams-ul');
 const teamsMenuDiv = document.querySelectorAll('.teams-menu-div');
 const playersMenuDiv = document.querySelectorAll('.players-menu-div');
-console.log(teamsMenuDiv);
 
 teamsMenuDiv.forEach(menu => menu.setAttribute('style', 'display:none'));
 playersMenuDiv.forEach(menu => menu.setAttribute('style', 'display:none'));
@@ -14,7 +13,6 @@ teamsUl.addEventListener('click', function(event){
         }
         teamsMenuDiv.forEach(menu => menu.setAttribute('style', 'display:none'));
         event.target.firstElementChild.setAttribute('style', 'display:block');
-        console.log(event);
     }
     if(event.target.classList.contains('players-menu-li')){
         if(event.target.firstElementChild.getAttribute('style') === 'display:block'){
@@ -23,6 +21,5 @@ teamsUl.addEventListener('click', function(event){
         }
         playersMenuDiv.forEach(menu => menu.setAttribute('style', 'display:none'));
         event.target.firstElementChild.setAttribute('style', 'display:block');
-        console.log(event);
     }
 });

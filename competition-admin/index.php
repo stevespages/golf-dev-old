@@ -128,12 +128,18 @@ foreach ($teams as $team) {
         echo ', ';
         echo $teamPlayer["email"];
         echo "<div class='players-menu-div'>";
+        echo "<div class='delete-div'>";
+        echo "<button class='delete-btn'>Remove</button>";
+        echo "<button class='cancel-btn' style='display:none'>Cancel</button>";
+        echo "<div class='confirm-div' style='display:none'>";
         echo "<form method='post'>";
         echo "<input type='hidden' name='teamid' value='{$team['idTeams']}'>";
         echo "<input type='hidden' name='competitionid' value='{$competitionId}'>";
         echo "<input type='hidden' name='remove-player' value='{$teamPlayer['idPlayers']}'>";
-        echo "<input type='submit' value='remove'>";
+        echo "<input type='submit' value='Confirm'>";
         echo '</form>';
+        echo '</div>'; // confirm-div
+        echo '</div>';
         echo "<div class='add-scores-div'>";
         scoresForm($teamPlayer, $course, $_SESSION['uid']);
         echo '</div>';
@@ -152,7 +158,8 @@ foreach ($teams as $team) {
 require_once '../php/leaderboard.php';
 
 ?>
-
+<script src='../javascript/general.js'></script>
+<script src='../javascript/scores-form.js'></script>
 <script type='module' src='javascript/main.js'></script>
     </body>
 </html>

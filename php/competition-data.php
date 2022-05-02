@@ -125,6 +125,7 @@ foreach($teams as $key => $team){
 
 $allPlayers = getPlayers($db, $uid);
 
+/*
 echo '<hr>';
 echo '<p>$competition</p>';
 echo '<pre></code>';
@@ -148,4 +149,5 @@ echo '<p>$scores</p>';
 echo '<pre></code>';
 print_r($scores);
 echo '</code></pre>';
+ */
 

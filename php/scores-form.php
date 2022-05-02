@@ -1,11 +1,13 @@
 <?php
 function scoresForm($player, $course, $uid){
-    echo "<form class='scores-form'>";
+    $formId = "x".substr($player['token'], 0, 8);
+    echo "<form class='scores-form' id='$formId'>";
     echo '<fieldset>';
     echo "<label for='handicap'>Course Handicap</label>";
-    echo "<input type='number' id='handicap{$player['idPlayers']}'";
+    echo "<input type='number'";
     echo " value='{$player['handicap']}'";
     echo " class='handicap-input' name='handicap' min='0' max='50'";
+    echo " data-form-id='$formId'";
     echo " data-token='{$player['token']}'";
     echo " data-uid='{$uid}'>";
     echo "<button type='button' class='upload-handicap-btn'>^</button>";
@@ -21,6 +23,7 @@ function scoresForm($player, $course, $uid){
         echo " name='h$i' form='scores-form'";
         echo " value='$player[$hole]'";
         echo " data-token='{$player['token']}'";
+        echo " data-form-id='$formId'";
         echo " data-uid='{$uid}'";
         echo " data-hole-number='$i'";
         echo " data-hole-par='{$course[$par]}'";
