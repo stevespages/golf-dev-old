@@ -1,6 +1,6 @@
 <?php
 function scoresForm($player, $course, $uid){
-    $formId = "x".substr($player['token'], 0, 8);
+    $formId = "scores-form-".substr($player['token'], 0, 8);
     echo "<form class='scores-form' id='$formId'>";
     echo '<fieldset>';
     echo "<label for='handicap'>Course Handicap</label>";

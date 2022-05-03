@@ -1,4 +1,3 @@
-console.log('hallo from ../javascript/scores-form.js!!!');
 /**
  * Calculates points from scores and par and stroke index for hole
  * @param {integer} score - The gross score for the hole
@@ -20,7 +19,6 @@ function calculatePoints(score, holeNumber, holePar, holeSi, handicap)
     if(score < 1 || score > 15){
         return "";
     }
-    console.log("we got past the ifs!");
     score = parseInt(score, 10);
     holePar = parseInt(holePar, 10);
     holeSi = parseInt(holeSi, 10);
@@ -95,7 +93,9 @@ function uploadScore(uploadBtn){
         if(xhr.readyState === 4 && xhr.status === 200){
             // result should be Bool success or failure
             const response = xhr.responseText;
+            console.log('response: ', response);
             const result = JSON.parse(response);
+            console.log('result: ', result);
             if(result.success){
                 uploadBtn.parentNode.innerHTML = '';
             }
@@ -159,23 +159,14 @@ scoresForms.forEach(function(el1){
     const holeInputs = el1.querySelectorAll('.hole-input');
     holeInputs.forEach(function(el2){
         const formId = el2.dataset.formId;
-        console.log('formId: ', formId);
         const scoresForm = document.querySelector("#" + formId);
-        console.log('scoresForm: ', scoresForm);
         const handicapInput = scoresForm.querySelectorAll('.handicap-input');
-        console.log('handicapInput: ', handicapInput);
         const handicap = handicapInput[0].value;
         const score = el2.value;
-        console.log('score: ', score);
         const holeNumber = el2.dataset.holeNumber;
-        console.log('holeNumber: ', holeNumber);
         const holePar = el2.dataset.holePar;
-        console.log('holePar: ', holePar);
         const holeSi = el2.dataset.holeSi;
-        console.log('holeSi: ', holeSi);
-        console.log('handicap: ', handicap);
         const points = calculatePoints(score, holeNumber, holePar, holeSi, handicap);
-        console.log('points: ', points);
         el2.offsetParent.nextSibling.innerHTML = points;
     });
 });
@@ -212,11 +203,8 @@ const holeInputs = document.querySelectorAll('.hole-input');
 holeInputs.forEach(holeInput => {
     holeInput.addEventListener('input', function(event){
         const formId = holeInput.dataset.formId;
-        console.log('formId: ', formId);
         const scoresForm = document.querySelector("#" + formId);
-        console.log('scoresForm: ', scoresForm);
         const handicapInput = scoresForm.querySelectorAll('.handicap-input');
-        console.log('handicapInput: ', handicapInput);
         const handicap = handicapInput[0].value;
         const score = event.target.value;
         const holeNumber = event.target.dataset.holeNumber;

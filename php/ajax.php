@@ -15,7 +15,7 @@
  * @link      http://stevespages.org.uk/
  */
 
-require './db-functions.php';
+require_once './db-functions.php';
 
 if($_GET['calling-function'] === 'upload-score'){
     function updateHoleScore($db, $emailsRow){
@@ -50,8 +50,20 @@ if($_GET['calling-function'] === 'upload-score'){
         'uid' => $_GET['uid'],
     ];
      */
-    $resultArray = ['success' => $result];
+
+    // We need to create two variables for use in competition-data.php
+    $uid = $_GET['uid'];
+    $competitionId = $emailsRow['id_competitions'];
+    require_once './competition-data.php';
+
+    $resultArray =
+        [
+            'success' => $result,
+            'teams' => $teams
+        ];
+    
     echo json_encode($resultArray);
+
 }
 
 if($_GET['calling-function'] === 'upload-handicap'){
