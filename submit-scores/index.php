@@ -65,7 +65,7 @@ foreach($teams as $team){
         foreach($team['players'] as $player){
             echo '<li>';
             echo "<h2 class='h2'>{$player['playerName']}</h2>";
-            scoresForm($player, $course, $uid);
+            scoresForm($player, $uid);
             echo '</li>';
         }
     }
@@ -76,12 +76,16 @@ echo '<hr>';
 require_once '../php/leaderboard.php';
 ?>
         <hr>
-<script src='../javascript/scores-form.js'></script>
-<script type="module" src="./javascript/main.js"></script>
+<script src="./javascript/main.js"></script>
 <script>
     const course = JSON.parse('<?php echo json_encode($course); ?>');
+    const teams = JSON.parse('<?php echo json_encode($teams); ?>');
     console.log('course: ', course);
+    console.log('teams: ', teams);
 </script>
+<script src='../javascript/calculate-points.js'></script>
+<script src='../javascript/scores-form.js'></script>
+<script src='../javascript/leaderboard.js'></script>
     </body>
 </html>
 

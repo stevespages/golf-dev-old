@@ -18,7 +18,7 @@
 require_once './db-functions.php';
 
 if($_GET['calling-function'] === 'upload-score'){
-    function updateHoleScore($db, $teamsPlayersRow, $course){
+    function updateHoleScore($db, $teamsPlayersRow){
         $tableName = "uid{$_GET['uid']}scores";
         $holeNumber = intval($_GET['hole-number']);
         if(gettype($holeNumber) !== 'integer'){
@@ -55,7 +55,7 @@ if($_GET['calling-function'] === 'upload-score'){
 }
 
 if($_GET['calling-function'] === 'upload-handicap'){
-    function updateHandicap($db, $teamsPlayersRow, $course){
+    function updateHandicap($db, $teamsPlayersRow){
         $tableName = "uid{$_GET['uid']}scores";
         $sql = "UPDATE $tableName SET handicap = :handicap";
         $sql .= " WHERE id_competitions = :id_competitions AND";
@@ -68,7 +68,8 @@ if($_GET['calling-function'] === 'upload-handicap'){
     }
     $teamsPlayersRow = getTeamsPlayersRow($db, $_GET['uid'], $_GET['token']);
     $result = updateHandicap($db, $teamsPlayersRow);
-
+    //$resultArray = ['success' => $result];
+    //echo json_encode($resultArray);
     // We need to create two variables for use in competition-data.php
     $uid = $_GET['uid'];
     $competitionId = $teamsPlayersRow['id_competitions'];
