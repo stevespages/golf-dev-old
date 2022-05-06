@@ -79,16 +79,16 @@ function getPlayers($db, $uid)
  * 
  * @param object  $db    PDO Object
  * @param integer $uid   the id of the administrator
- * @param string  $token unguessable string in emails table
+ * @param string  $token unguessable string in teams_players table
  * 
  * @used-by golf/submit-scores/index.php
  * @used-by golf/received-scores/index.php
  * 
  * @return array of rows from the table
  */
-function getEmailsRow($db, $uid, $token)
+function getTeamsPlayersRow($db, $uid, $token)
 {
-    $tableName = "uid".$uid."emails";
+    $tableName = "uid".$uid."teams_players";
     $sql = "SELECT id_players, id_teams, id_competitions from $tableName";
     $sql .= " WHERE token = :token";
     $stmt= $db->prepare($sql);
@@ -103,7 +103,7 @@ function getEmailsRow($db, $uid, $token)
  * 
  * @param object  $db    PDO Object
  * @param integer $uid   the id of the administrator
- * @param string  $token unguessable string in emails table
+ * @param integer $teamId   the id of the team 
  * 
  * @used-by golf/submit-scores/index.php
  * @used-by golf/received-scores/index.php

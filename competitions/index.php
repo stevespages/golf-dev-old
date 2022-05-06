@@ -49,10 +49,12 @@ if (isset($_GET['competitionid'])) {
     $stmt = $db->prepare($sql);
     $stmt->execute();
 
+    /* this table no longer exists. Get rid of this code
     $tablename = "uid" . $_SESSION['uid'] . "emails";
     $sql = "DELETE FROM $tablename WHERE id_competitions = " . $competitionId;
     $stmt = $db->prepare($sql);
     $stmt->execute();
+     */
 }
 
 require_once '../header.php';

@@ -18,7 +18,7 @@
 require_once './db-functions.php';
 
 if($_GET['calling-function'] === 'upload-score'){
-    function updateHoleScore($db, $emailsRow){
+    function updateHoleScore($db, $teamsPlayersRow){
         $tableName = "uid{$_GET['uid']}scores";
         $holeNumber = intval($_GET['hole-number']);
         if(gettype($holeNumber) !== 'integer'){
@@ -32,28 +32,16 @@ if($_GET['calling-function'] === 'upload-score'){
         $sql .= " id_players = :id_players";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':score', $_GET['score']);
-        $stmt->bindParam(':id_competitions', $emailsRow['id_competitions']);
-        $stmt->bindParam(':id_players', $emailsRow['id_players']);
+        $stmt->bindParam(':id_competitions', $teamsPlayersRow['id_competitions']);
+        $stmt->bindParam(':id_players', $teamsPlayersRow['id_players']);
         return($stmt->execute());
     }
-    $emailsRow = getEmailsRow($db, $_GET['uid'], $_GET['token']);
-    $result = updateHoleScore($db, $emailsRow);
-    /*
-    $resultArray = [
-        'success' => false,
-        'score' => $_GET['score'],
-        'holeNumber' => $_GET['hole-number'],
-        'holePar' => $_GET['hole-par'],
-        'holeSi' => $_GET['hole-si'],
-        'handicap' => $_GET['handicap'],
-        'token' => $_GET['token'],
-        'uid' => $_GET['uid'],
-    ];
-     */
+    $teamsPlayersRow = getTeamsPlayersRow($db, $_GET['uid'], $_GET['token']);
+    $result = updateHoleScore($db, $teamsPlayersRow);
 
     // We need to create two variables for use in competition-data.php
     $uid = $_GET['uid'];
-    $competitionId = $emailsRow['id_competitions'];
+    $competitionId = $teamsPlayersRow['id_competitions'];
     require_once './competition-data.php';
 
     $resultArray =
@@ -67,28 +55,32 @@ if($_GET['calling-function'] === 'upload-score'){
 }
 
 if($_GET['calling-function'] === 'upload-handicap'){
-    function updateHandicap($db, $emailsRow){
+    function updateHandicap($db, $teamsPlayersRow){
         $tableName = "uid{$_GET['uid']}scores";
         $sql = "UPDATE $tableName SET handicap = :handicap";
         $sql .= " WHERE id_competitions = :id_competitions AND";
         $sql .= " id_players = :id_players";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':handicap', $_GET['handicap']);
-        $stmt->bindParam(':id_competitions', $emailsRow['id_competitions']);
-        $stmt->bindParam(':id_players', $emailsRow['id_players']);
+        $stmt->bindParam(':id_competitions', $teamsPlayersRow['id_competitions']);
+        $stmt->bindParam(':id_players', $teamsPlayersRow['id_players']);
         return($stmt->execute());
     }
-    $emailsRow = getEmailsRow($db, $_GET['uid'], $_GET['token']);
-    $result = updateHandicap($db, $emailsRow);
-    $resultArray = ['success' => $result];
-    /*
-    $resultArray = [
-        'success' => false,
-        'handicap' => $_GET['handicap'],
-        'token' => $_GET['token'],
-        'uid' => $_GET['uid'],
-    ];
-     */
+    $teamsPlayersRow = getTeamsPlayersRow($db, $_GET['uid'], $_GET['token']);
+    $result = updateHandicap($db, $teamsPlayersRow);
+    //$resultArray = ['success' => $result];
+    //echo json_encode($resultArray);
+    // We need to create two variables for use in competition-data.php
+    $uid = $_GET['uid'];
+    $competitionId = $teamsPlayersRow['id_competitions'];
+    require_once './competition-data.php';
+
+    $resultArray =
+        [
+            'success' => $result,
+            'teams' => $teams
+        ];
+    
     echo json_encode($resultArray);
 }
 

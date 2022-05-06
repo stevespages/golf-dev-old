@@ -31,57 +31,6 @@ function calculatePoints($holePar, $holeSi, $handicap, $grossStrokes)
     return $points;
 }
 
-/*
-function assignScores($scores){
-    $playersScores = [];
-    foreach($scores as $score){
-        $playersScores[$score['id_players']]['name'] = $score['name'];
-        $playersScores[$score['id_players']]['handicap'] = $score['handicap'];
-        $playersScores[$score['id_players']]['h1'] = $score['h1'];
-        $playersScores[$score['id_players']]['h2'] = $score['h2'];
-        $playersScores[$score['id_players']]['h3'] = $score['h3'];
-        $playersScores[$score['id_players']]['h4'] = $score['h4'];
-        $playersScores[$score['id_players']]['h5'] = $score['h5'];
-        $playersScores[$score['id_players']]['h6'] = $score['h6'];
-        $playersScores[$score['id_players']]['h7'] = $score['h7'];
-        $playersScores[$score['id_players']]['h8'] = $score['h8'];
-        $playersScores[$score['id_players']]['h9'] = $score['h9'];
-        $playersScores[$score['id_players']]['h10'] = $score['h10'];
-        $playersScores[$score['id_players']]['h11'] = $score['h11'];
-        $playersScores[$score['id_players']]['h12'] = $score['h12'];
-        $playersScores[$score['id_players']]['h13'] = $score['h13'];
-        $playersScores[$score['id_players']]['h14'] = $score['h14'];
-        $playersScores[$score['id_players']]['h15'] = $score['h15'];
-        $playersScores[$score['id_players']]['h16'] = $score['h16'];
-        $playersScores[$score['id_players']]['h17'] = $score['h17'];
-        $playersScores[$score['id_players']]['h18'] = $score['h18'];
-    }
-    return $playersScores;
-}
-
-$playersScores = assignScores($scores);
-
-foreach($playersScores as $key => $ps){
-    $playersScores[$key]['p1'] = calculatePoints($course['h1par'], $course['h1si'], $playersScores[$key]['handicap'], $playersScores[$key]['h1']);
-    $playersScores[$key]['p2'] = calculatePoints($course['h2par'], $course['h2si'], $playersScores[$key]['handicap'], $playersScores[$key]['h2']);
-    $playersScores[$key]['p3'] = calculatePoints($course['h3par'], $course['h3si'], $playersScores[$key]['handicap'], $playersScores[$key]['h3']);
-    $playersScores[$key]['p4'] = calculatePoints($course['h4par'], $course['h4si'], $playersScores[$key]['handicap'], $playersScores[$key]['h4']);
-    $playersScores[$key]['p5'] = calculatePoints($course['h5par'], $course['h5si'], $playersScores[$key]['handicap'], $playersScores[$key]['h5']);
-    $playersScores[$key]['p6'] = calculatePoints($course['h6par'], $course['h6si'], $playersScores[$key]['handicap'], $playersScores[$key]['h6']);
-    $playersScores[$key]['p7'] = calculatePoints($course['h7par'], $course['h7si'], $playersScores[$key]['handicap'], $playersScores[$key]['h7']);
-    $playersScores[$key]['p8'] = calculatePoints($course['h8par'], $course['h8si'], $playersScores[$key]['handicap'], $playersScores[$key]['h8']);
-    $playersScores[$key]['p9'] = calculatePoints($course['h9par'], $course['h9si'], $playersScores[$key]['handicap'], $playersScores[$key]['h9']);
-    $playersScores[$key]['p10'] = calculatePoints($course['h10par'], $course['h10si'], $playersScores[$key]['handicap'], $playersScores[$key]['h10']);
-    $playersScores[$key]['p11'] = calculatePoints($course['h11par'], $course['h11si'], $playersScores[$key]['handicap'], $playersScores[$key]['h11']);
-    $playersScores[$key]['p12'] = calculatePoints($course['h12par'], $course['h12si'], $playersScores[$key]['handicap'], $playersScores[$key]['h12']);
-    $playersScores[$key]['p13'] = calculatePoints($course['h13par'], $course['h13si'], $playersScores[$key]['handicap'], $playersScores[$key]['h13']);
-    $playersScores[$key]['p14'] = calculatePoints($course['h14par'], $course['h14si'], $playersScores[$key]['handicap'], $playersScores[$key]['h14']);
-    $playersScores[$key]['p15'] = calculatePoints($course['h15par'], $course['h15si'], $playersScores[$key]['handicap'], $playersScores[$key]['h15']);
-    $playersScores[$key]['p16'] = calculatePoints($course['h16par'], $course['h16si'], $playersScores[$key]['handicap'], $playersScores[$key]['h16']);
-    $playersScores[$key]['p17'] = calculatePoints($course['h17par'], $course['h17si'], $playersScores[$key]['handicap'], $playersScores[$key]['h17']);
-    $playersScores[$key]['p18'] = calculatePoints($course['h18par'], $course['h18si'], $playersScores[$key]['handicap'], $playersScores[$key]['h18']);
-}
- */
 ?>
 
         <h2>Leaderboard</h2>
@@ -103,51 +52,52 @@ foreach ($teams as $team) {
     echo "</tr>";
     foreach ($team['players'] as $p) {
         $trScoresId = "tr-scores-".substr($p['token'], 0, 8);
+        $handicapSpanId = "handicap-span-".substr($p['token'], 0, 8);
         echo "<tr id='$trScoresId'>";
         echo "<td>".$p['playerName'];
-        echo "(".$p['handicap'].")";
+        echo "(<span id='$handicapSpanId'>".$p['handicap']."</span>)";
         echo "</td>";
-        echo "<td>".$p['h1']."</td>";
-        echo "<td>".$p['h2']."</td>";
-        echo "<td>".$p['h3']."</td>";
-        echo "<td>".$p['h4']."</td>";
-        echo "<td>".$p['h5']."</td>";
-        echo "<td>".$p['h6']."</td>";
-        echo "<td>".$p['h7']."</td>";
-        echo "<td>".$p['h8']."</td>";
-        echo "<td>".$p['h9']."</td>";
-        echo "<td>".$p['h10']."</td>";
-        echo "<td>".$p['h11']."</td>";
-        echo "<td>".$p['h12']."</td>";
-        echo "<td>".$p['h13']."</td>";
-        echo "<td>".$p['h14']."</td>";
-        echo "<td>".$p['h15']."</td>";
-        echo "<td>".$p['h16']."</td>";
-        echo "<td>".$p['h17']."</td>";
-        echo "<td>".$p['h18']."</td>";
+        echo "<td class='h1'>".$p['h1']."</td>";
+        echo "<td class='h2'>".$p['h2']."</td>";
+        echo "<td class='h3'>".$p['h3']."</td>";
+        echo "<td class='h4'>".$p['h4']."</td>";
+        echo "<td class='h5'>".$p['h5']."</td>";
+        echo "<td class='h6'>".$p['h6']."</td>";
+        echo "<td class='h7'>".$p['h7']."</td>";
+        echo "<td class='h8'>".$p['h8']."</td>";
+        echo "<td class='h9'>".$p['h9']."</td>";
+        echo "<td class='h10'>".$p['h10']."</td>";
+        echo "<td class='h11'>".$p['h11']."</td>";
+        echo "<td class='h12'>".$p['h12']."</td>";
+        echo "<td class='h13'>".$p['h13']."</td>";
+        echo "<td class='h14'>".$p['h14']."</td>";
+        echo "<td class='h15'>".$p['h15']."</td>";
+        echo "<td class='h16'>".$p['h16']."</td>";
+        echo "<td class='h17'>".$p['h17']."</td>";
+        echo "<td class='h18'>".$p['h18']."</td>";
         echo "</tr>";
         $trPointsId = "tr-points-".substr($p['token'], 0, 8);
         echo "<tr id='$trPointsId'>";
         echo "<td>";
         echo "</td>";
-            echo "<td>".calculatePoints($course['h1par'], $course['h1si'], $p['handicap'], $p['h1'])."</td>";
-            echo "<td>".calculatePoints($course['h2par'], $course['h2si'], $p['handicap'], $p['h2'])."</td>";
-            echo "<td>".calculatePoints($course['h3par'], $course['h3si'], $p['handicap'], $p['h3'])."</td>";
-            echo "<td>".calculatePoints($course['h4par'], $course['h4si'], $p['handicap'], $p['h4'])."</td>";
-            echo "<td>".calculatePoints($course['h5par'], $course['h5si'], $p['handicap'], $p['h5'])."</td>";
-            echo "<td>".calculatePoints($course['h6par'], $course['h6si'], $p['handicap'], $p['h6'])."</td>";
-            echo "<td>".calculatePoints($course['h7par'], $course['h7si'], $p['handicap'], $p['h7'])."</td>";
-            echo "<td>".calculatePoints($course['h8par'], $course['h8si'], $p['handicap'], $p['h8'])."</td>";
-            echo "<td>".calculatePoints($course['h9par'], $course['h9si'], $p['handicap'], $p['h9'])."</td>";
-            echo "<td>".calculatePoints($course['h10par'], $course['h10si'], $p['handicap'], $p['h10'])."</td>";
-            echo "<td>".calculatePoints($course['h11par'], $course['h11si'], $p['handicap'], $p['h11'])."</td>";
-            echo "<td>".calculatePoints($course['h12par'], $course['h12si'], $p['handicap'], $p['h12'])."</td>";
-            echo "<td>".calculatePoints($course['h13par'], $course['h13si'], $p['handicap'], $p['h13'])."</td>";
-            echo "<td>".calculatePoints($course['h14par'], $course['h14si'], $p['handicap'], $p['h14'])."</td>";
-            echo "<td>".calculatePoints($course['h15par'], $course['h15si'], $p['handicap'], $p['h15'])."</td>";
-            echo "<td>".calculatePoints($course['h16par'], $course['h16si'], $p['handicap'], $p['h16'])."</td>";
-            echo "<td>".calculatePoints($course['h17par'], $course['h17si'], $p['handicap'], $p['h17'])."</td>";
-            echo "<td>".calculatePoints($course['h18par'], $course['h18si'], $p['handicap'], $p['h18'])."</td>";
+            echo "<td class='h1' data-hole-number=1 data-hole-par='{$course['h1par']}' data-hole-si='{$course['h1si']}'>".calculatePoints($course['h1par'], $course['h1si'], $p['handicap'], $p['h1'])."</td>";
+            echo "<td class='h2' data-hole-number=2 data-hole-par='{$course['h2par']}' data-hole-si='{$course['h2si']}'>".calculatePoints($course['h2par'], $course['h2si'], $p['handicap'], $p['h2'])."</td>";
+            echo "<td class='h3' data-hole-number=3 data-hole-par='{$course['h3par']}' data-hole-si='{$course['h3si']}'>".calculatePoints($course['h3par'], $course['h3si'], $p['handicap'], $p['h3'])."</td>";
+            echo "<td class='h4' data-hole-number=4 data-hole-par='{$course['h4par']}' data-hole-si='{$course['h4si']}'>".calculatePoints($course['h4par'], $course['h4si'], $p['handicap'], $p['h4'])."</td>";
+            echo "<td class='h5' data-hole-number=5 data-hole-par='{$course['h5par']}' data-hole-si='{$course['h5si']}'>".calculatePoints($course['h5par'], $course['h5si'], $p['handicap'], $p['h5'])."</td>";
+            echo "<td class='h6' data-hole-number=6 data-hole-par='{$course['h6par']}' data-hole-si='{$course['h6si']}'>".calculatePoints($course['h6par'], $course['h6si'], $p['handicap'], $p['h6'])."</td>";
+            echo "<td class='h7' data-hole-number=7 data-hole-par='{$course['h7par']}' data-hole-si='{$course['h7si']}'>".calculatePoints($course['h7par'], $course['h7si'], $p['handicap'], $p['h7'])."</td>";
+            echo "<td class='h8' data-hole-number=8 data-hole-par='{$course['h8par']}' data-hole-si='{$course['h8si']}'>".calculatePoints($course['h8par'], $course['h8si'], $p['handicap'], $p['h8'])."</td>";
+            echo "<td class='h9' data-hole-number=9 data-hole-par='{$course['h9par']}' data-hole-si='{$course['h9si']}'>".calculatePoints($course['h9par'], $course['h9si'], $p['handicap'], $p['h9'])."</td>";
+            echo "<td class='h10' data-hole-number=10 data-hole-par='{$course['h10par']}' data-hole-si='{$course['h10si']}'>".calculatePoints($course['h10par'], $course['h10si'], $p['handicap'], $p['h10'])."</td>";
+            echo "<td class='h11' data-hole-number=11 data-hole-par='{$course['h11par']}' data-hole-si='{$course['h11si']}'>".calculatePoints($course['h11par'], $course['h11si'], $p['handicap'], $p['h11'])."</td>";
+            echo "<td class='h12' data-hole-number=12 data-hole-par='{$course['h12par']}' data-hole-si='{$course['h12si']}'>".calculatePoints($course['h12par'], $course['h12si'], $p['handicap'], $p['h12'])."</td>";
+            echo "<td class='h13' data-hole-number=13 data-hole-par='{$course['h13par']}' data-hole-si='{$course['h13si']}'>".calculatePoints($course['h13par'], $course['h13si'], $p['handicap'], $p['h13'])."</td>";
+            echo "<td class='h14' data-hole-number=14 data-hole-par='{$course['h14par']}' data-hole-si='{$course['h14si']}'>".calculatePoints($course['h14par'], $course['h14si'], $p['handicap'], $p['h14'])."</td>";
+            echo "<td class='h15' data-hole-number=15 data-hole-par='{$course['h15par']}' data-hole-si='{$course['h15si']}'>".calculatePoints($course['h15par'], $course['h15si'], $p['handicap'], $p['h15'])."</td>";
+            echo "<td class='h16' data-hole-number=16 data-hole-par='{$course['h16par']}' data-hole-si='{$course['h16si']}'>".calculatePoints($course['h16par'], $course['h16si'], $p['handicap'], $p['h16'])."</td>";
+            echo "<td class='h17' data-hole-number=17 data-hole-par='{$course['h17par']}' data-hole-si='{$course['h17si']}'>".calculatePoints($course['h17par'], $course['h17si'], $p['handicap'], $p['h17'])."</td>";
+            echo "<td class='h18' data-hole-number=18 data-hole-par='{$course['h18par']}' data-hole-si='{$course['h18si']}'>".calculatePoints($course['h18par'], $course['h18si'], $p['handicap'], $p['h18'])."</td>";
             echo "</tr>";
     }
 }

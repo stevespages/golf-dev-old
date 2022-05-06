@@ -40,7 +40,8 @@ function insertTeam($db, $teamName, $idCompetitiones)
 }
 
 /**
- * Inserts id_teams and id_players as a row in uid123teams_players table
+ * Inserts id_teams and id_players as a row in uid123teams_players table and ...
+ * Inserts an unguessable token into uid123emails table
  * 
  * Each row indicates which team a given player is in for a particular competition.
  * Note that the competition is obtainable indirectly from the teams table
@@ -54,12 +55,14 @@ function insertTeam($db, $teamName, $idCompetitiones)
 function uploadTeamPlayer($db, $idTeams, $idPlayers, $idCompetitions)
 {
     $tableName = "uid".$_SESSION["uid"]."teams_players";
-    $sql = "INSERT INTO $tableName (id_teams, id_players, id_competitions) ";
-    $sql .= "VALUES (:id_teams, :id_players, :id_competitions)";
+    $token = bin2hex(random_bytes(25));
+    $sql = "INSERT INTO $tableName (id_teams, id_players, id_competitions, token) ";
+    $sql .= "VALUES (:id_teams, :id_players, :id_competitions, :token)";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":id_teams", $idTeams);
     $stmt->bindParam(":id_players", $idPlayers);
     $stmt->bindParam(":id_competitions", $idCompetitions);
+    $stmt->bindParam(":token", $token);
     return($stmt->execute());
 }
 

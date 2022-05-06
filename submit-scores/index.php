@@ -18,19 +18,19 @@ if (!isset($_GET["token"]) || !isset($_GET["u"])) {
     header("Location: ../");
 }
 
-$emailsRow = getEmailsRow($db, $_GET["u"], $_GET["token"]);
-if (empty($emailsRow)) {
+$teamsPlayersRow = getTeamsPlayersRow($db, $_GET["u"], $_GET["token"]);
+if (empty($teamsPlayersRow)) {
     header("Location: ../");
 }
 
 $uid = $_GET['u'];
 
-$competitionId = $emailsRow['id_competitions'];
+$competitionId = $teamsPlayersRow['id_competitions'];
 
 // not sure if this is correct for the person emailed??
-$emailedPlayerId = $emailsRow['id_players'];
+$emailedPlayerId = $teamsPlayersRow['id_players'];
 
-$teamId = $emailsRow['id_teams'];
+$teamId = $teamsPlayersRow['id_teams'];
 
 $teamRow = getTeamsRow($db, $uid, $teamId);
 
@@ -78,6 +78,10 @@ require_once '../php/leaderboard.php';
         <hr>
 <script src='../javascript/scores-form.js'></script>
 <script type="module" src="./javascript/main.js"></script>
+<script>
+    const course = JSON.parse('<?php echo json_encode($course); ?>');
+    console.log('course: ', course);
+</script>
     </body>
 </html>
 

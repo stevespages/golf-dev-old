@@ -57,7 +57,7 @@ function prepareEmails($db, $competitionId)
     $p = $tablePrefix."players";
     $m = $tablePrefix."competitions";
     $c = $tablePrefix."courses";
-    $sql = "SELECT $m.name AS competitionName, $m.date AS competitionDate, $m.time AS competitionTime, $c.name AS courseName, $c.postcode AS coursePostcode, $t.id AS teamId, $t.name AS teamName, $p.id AS playerId, $p.name AS playerName, $p.email AS playerEmail FROM $tp LEFT JOIN $t ON $t.id = $tp.id_teams LEFT JOIN $p ON $tp.id_players = $p.id LEFT JOIN $m ON $m.id = $t.id_competitions LEFT JOIN $c ON $c.id = $m.id_course WHERE $t.id_competitions = :id_competitions ORDER BY $t.id";
+    $sql = "SELECT $m.name AS competitionName, $m.date AS competitionDate, $m.time AS competitionTime, $c.name AS courseName, $c.postcode AS coursePostcode, $t.id AS teamId, $t.name AS teamName, $p.id AS playerId, $p.name AS playerName, $p.email AS playerEmail, $tp.token AS token FROM $tp LEFT JOIN $t ON $t.id = $tp.id_teams LEFT JOIN $p ON $tp.id_players = $p.id LEFT JOIN $m ON $m.id = $t.id_competitions LEFT JOIN $c ON $c.id = $m.id_course WHERE $t.id_competitions = :id_competitions ORDER BY $t.id";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":id_competitions", $competitionId);
     $stmt->execute();
@@ -73,20 +73,26 @@ function prepareEmails($db, $competitionId)
  * 
  * @return bool success / failure of sending the email
  */
+// MODIFY: token should be got from teams_players table not generated
 function sendEmails($db, $emailsToSend, $competitionId)
 {
-    $tableName = "uid".$_SESSION["uid"]."emails";
+    // I don't need to store any data when I send emails
+    // $tableName = "uid".$_SESSION["uid"]."emails";
     foreach ($emailsToSend as $email) {
-        $token = bin2hex(random_bytes(25));
+        // $token = bin2hex(random_bytes(25)); // NO! get from teams_players
+        $token = $email['token']; // this is from teams_players
         $subject = "Submit Scores";
         $msg = "Hallo {$email['playerName']}, you are a contestant in team, {$email['teamName']}, for the {$email['competitionName']} competition at {$email['courseName']}, {$email['coursePostcode']} ({$email['competitionDate']}, {$email['competitionTime']}). If you would like to submit your scores electronically through a secure website please click this link: http://stevespages.org.uk/golf/submit-scores/?token={$token}&u={$_SESSION['uid']} Otherwise please take your score card to the competition administrators when you have completed it.";
         $headers = "From: golf@golf.com";
+        // I don't need to store any data when I send emails
+        /*
         $sql = "INSERT INTO $tableName (id_players, id_teams, id_competitions, token) VALUES (:id_players, :id_teams, :id_competitions, '$token')";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(":id_players", $email['playerId']);
         $stmt->bindParam(":id_teams", $email['teamId']);
         $stmt->bindParam(":id_competitions", $competitionId);
         $stmt->execute();
+         */
         mail($email['playerEmail'], $subject, $msg, $headers);
     }
 }

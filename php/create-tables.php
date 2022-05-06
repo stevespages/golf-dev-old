@@ -55,10 +55,12 @@ $sql .= "id_course INTEGER, date TEXT, time TEXT)";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 
+/*
 $tableName = "uid".$_SESSION["uid"]."emails";
 $sql = "CREATE TABLE IF NOT EXISTS '$tableName' (id INTEGER PRIMARY KEY, id_players TEXT, id_teams TEXT, id_competitions TEXT, token TEXT)";
 $stmt = $db->prepare($sql);
 $stmt->execute();
+*/
 
 $tableName = "uid".$_SESSION["uid"]."teams";
 $sql = "CREATE TABLE IF NOT EXISTS '$tableName' (id INTEGER PRIMARY KEY, ";
@@ -68,7 +70,7 @@ $stmt->execute();
 
 $tableName = "uid".$_SESSION["uid"]."teams_players";
 $sql = "CREATE TABLE IF NOT EXISTS '$tableName' (id INTEGER PRIMARY KEY, ";
-$sql .= "id_teams INTEGER, id_players INTEGER, id_competitions INTEGER)";
+$sql .= "id_teams INTEGER, id_players INTEGER, id_competitions INTEGER, token TEXT)";
 $stmt = $db->prepare($sql);
 $stmt->execute();
 

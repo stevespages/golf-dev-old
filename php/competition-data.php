@@ -46,7 +46,7 @@ function nestTeams($teams){
 }
 
 function getToken($db, $uid, $playersId, $competitionsId){
-    $tableName = 'uid' . $uid . 'emails';
+    $tableName = 'uid' . $uid . 'teams_players';
     $sql = "SELECT token FROM $tableName WHERE";
     $sql .= " id_players = $playersId";
     $sql .= " AND id_competitions = $competitionsId";
